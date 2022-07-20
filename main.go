@@ -51,7 +51,7 @@ func main() {
 		logrus.WithError(err).Fatal("Error getting config.")
 	}
 
-	host := cfg.Host
+	host := "https://source.openeuler.sh/api/v4"
 	c, err := genClient(o.gitlab.TokenPath, host)
 	if err != nil {
 		logrus.WithError(err).Fatal("Error generating client.")

@@ -75,9 +75,6 @@ type botConfig struct {
 	// The unit is minute.
 	Interval int `json:"interval,omitempty"`
 
-	// Host is the API url for robot
-	Host string `json:"host,omitempty"`
-
 	// EnableCreatingOBSMetaProject is the switch of creating project in obs meta repo
 	EnableCreatingOBSMetaProject bool `json:"enable_creating_obs_meta_project,omitempty"`
 
