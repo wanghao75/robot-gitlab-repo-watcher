@@ -51,6 +51,8 @@ func (bot *robot) createRepo(
 		return models.RepoState{}
 	}
 
+	OneCheckTotalRepos += 1
+
 	defer func() {
 		hook(repoName, log)
 	}()
@@ -186,6 +188,10 @@ func (bot *robot) renameRepo(
 		log.Infof("transfer project failed to %s because project doesnot change the organization", org)
 	} else {
 		log.Infof("transfer project success to %s ", org)
+	}
+
+	if err == nil {
+		OneCheckTotalRepos += 1
 	}
 
 	lbs, err := bot.cli.GetProjectLabels(pid)

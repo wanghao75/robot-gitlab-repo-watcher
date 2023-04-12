@@ -191,12 +191,22 @@ func (e *expectState) getProjectIDByOrgRepo() (int, error) {
 	return pid, nil
 }
 
+// Packages means a slice of repos these are needed to create, example: [{vwh50  openEuler:Factory 2023-03-31}]
+// OneCheckTotalRepos means an int number of all repos these are needed to create, example: 1
+var Packages []PackageInfo
+var OneCheckTotalRepos int
+
 func (e *expectState) check(
 	org string,
 	isStopped func() bool,
 	clearLocal func(func(string) bool),
 	checkRepo func(*community.Repository, []string, []string, string, *logrus.Entry),
 ) {
+
+	// 测试将单次创建仓库对应的单次更新文件，修改为一批次创建仓库对应一次更新文件, 每次轮询check时，进行重置
+	Packages = []PackageInfo{}
+	OneCheckTotalRepos = 0
+
 	allFiles, allSigs, allSigInfos, err := e.listAllFilesOfRepo(org)
 	if err != nil {
 		e.log.Errorf("list all file, err:%s", err.Error())
